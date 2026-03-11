@@ -1,0 +1,11 @@
+.env
+.tgbot/
+*.session
+*.session-journal
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.ipynb
+1.txt
+as.py
