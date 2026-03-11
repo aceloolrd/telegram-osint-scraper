@@ -10,6 +10,52 @@ A Telegram userbot that listens to incoming messages across all chats and channe
 
 ---
 
+## ⚠️ Account Safety — Will Telegram Ban You?
+
+**Short answer:** Telegram does not ban accounts for using Telethon itself. It bans accounts for *suspicious behavior patterns* — and Telethon is frequently used by spammers, so Telegram's spam detection is quite aggressive toward userbots.
+
+### What actually triggers bans
+
+| Trigger | Risk level |
+|---|---|
+| Rapid fire requests with no delays | High |
+| Fresh account (< few days old) | High |
+| VoIP / virtual phone number | High |
+| Mass messaging or advertising | High |
+| Suspicious IP / datacenter host | Medium |
+| Reading messages without interaction | Low |
+| Monitoring channels you're already in | Low |
+
+### Telegram's Terms of Service
+
+The [Telegram API ToS](https://core.telegram.org/api/terms) explicitly forbids:
+- Performing actions on behalf of a user **without their knowledge and consent**
+- Interfering with read receipts, online status, or self-destruct timers
+- Using collected data to train ML/AI models
+
+Violators get a **10-day warning**, then API access is revoked. Permanent account suspension is possible for severe violations (spam, phishing).
+
+### Error codes you may encounter
+
+| Code | Meaning |
+|---|---|
+| `401 USER_DEACTIVATED_BAN` | Account suspended |
+| `420 FLOOD_WAIT_X` | Rate limit hit — wait X seconds |
+| `PeerFloodError` | Account temporarily limited on certain peers |
+
+### Best practices to stay safe
+
+- **Use an established account** — don't run this on a freshly created one
+- **Real SIM, not VoIP** — virtual numbers are high-risk
+- **Respect rate limits** — Telegram's undocumented soft limit is ~1 req/sec per chat
+- **Handle `FloodWaitError`** — Telethon does this automatically, don't override it
+- **Check account status** — message [@SpamBot](https://t.me/spambot) inside Telegram to see if you're flagged
+- **Only monitor chats you're subscribed to** — don't mass-join channels just to scrape
+
+If you get banned: contact `abuse@telegram.org` or use [telegram.org/support](https://telegram.org/support).
+
+---
+
 ## Features
 
 - Real-time message capture via [Telethon](https://github.com/LonamiWebs/Telethon) (MTProto)
@@ -121,6 +167,50 @@ CREATE TABLE messages (
 Userbot на Telethon, который в реальном времени перехватывает входящие сообщения из всех чатов и каналов, на которые подписан аккаунт, и сохраняет структурированные данные в PostgreSQL.
 
 > **Назначение:** исследование, мониторинг публичных каналов с согласия владельца аккаунта, образовательные цели.
+
+## ⚠️ Безопасность аккаунта — банит ли Telegram за Telethon?
+
+**Коротко:** Telegram не банит за использование Telethon как такового. Он банит за **подозрительные паттерны поведения** — но так как Telethon активно используется спамерами, антиспам-системы Telegram очень агрессивны по отношению к юзерботам.
+
+### Что реально вызывает бан
+
+| Триггер | Риск |
+|---|---|
+| Много запросов без задержек | Высокий |
+| Свежий аккаунт (< нескольких дней) | Высокий |
+| VoIP / виртуальный номер | Высокий |
+| Массовая рассылка или реклама | Высокий |
+| Подозрительный IP / хостинг ДЦ | Средний |
+| Чтение сообщений без активных действий | Низкий |
+| Мониторинг каналов, на которые уже подписан | Низкий |
+
+### Правила использования API Telegram
+
+[ToS Telegram API](https://core.telegram.org/api/terms) явно запрещает:
+- Выполнять действия от имени пользователя **без его ведома и согласия**
+- Вмешиваться в статус прочтения, онлайн-статус, самоуничтожение сообщений
+- Использовать собранные данные для обучения ML/AI-моделей
+
+Нарушителям дают **10 дней** на исправление, затем доступ к API отзывается. За спам/фишинг — постоянная блокировка аккаунта.
+
+### Коды ошибок
+
+| Код | Значение |
+|---|---|
+| `401 USER_DEACTIVATED_BAN` | Аккаунт заблокирован |
+| `420 FLOOD_WAIT_X` | Rate limit — нужно подождать X секунд |
+| `PeerFloodError` | Аккаунт временно ограничен для части контактов |
+
+### Как снизить риск
+
+- **Используй устоявшийся аккаунт** — не запускай на только что созданном
+- **Реальная SIM-карта, не VoIP** — виртуальные номера в зоне высокого риска
+- **Соблюдай rate limits** — неофициальный мягкий лимит Telegram ~1 запрос/сек на чат
+- **Не перехватывай `FloodWaitError`** — Telethon обрабатывает его автоматически
+- **Проверь статус аккаунта** — напиши [@SpamBot](https://t.me/spambot) в Telegram, он покажет, помечен ли аккаунт
+- **Мониторь только подписки** — не вступай в каналы массово ради сбора данных
+
+Если заблокировали: `abuse@telegram.org` или [telegram.org/support](https://telegram.org/support).
 
 ## Возможности
 
